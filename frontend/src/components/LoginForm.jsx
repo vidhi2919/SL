@@ -1,28 +1,49 @@
 import React, { useState } from "react";
 
-const LoginForm = ({ onLogin }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const LoginPage = ({ setUser }) => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Reset error on new submission
+    setIsLoading(true);
+    setError("");
 
-    // **Bypassing Authentication for Testing**
-    console.log("Testing mode: Bypassing authentication");
-    onLogin();
+    try {
+      console.log("🚀 Logging in with:", formData);
+      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = userCredential.user;
+      console.log("✅ Login Successful:", user);
 
-    // Uncomment when integrating Firebase
-    /*
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        onLogin();
-      })
-      .catch((error) => {
-        setError("Invalid email or password. Please try again.");
-      });
-    */
+      // Get user role from Firestore
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        console.log("👤 User Data:", userData);
+
+        // Set user state
+        setUser({ ...user, role: userData.role });
+
+        // Redirect based on role
+        if (userData.role === "borrower") {
+          navigate("/borrower-dashboard");
+        } else if (userData.role === "lender") {
+          navigate("/lender/lender-dashboard");
+        } else {
+          setError("Invalid user role. Contact support.");
+        }
+      } else {
+        setError("User data not found. Please contact support.");
+      }
+    } catch (error) {
+      console.error("❌ Login Error:", error);
+      setError("Invalid email or password. Please try again.");
+    }
+
+    setIsLoading(false);
   };
 
   return (
