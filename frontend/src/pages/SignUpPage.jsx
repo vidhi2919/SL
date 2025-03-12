@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { ArrowLeft as Home } from "lucide-react";
-import logo from "../assets/SmartLendLogo6.png"
-import gradient from "../assets/gradient.png"
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore"; 
+import { auth, db } from "../firebaseConfig"; // ✅ Correct import
+import logo from "../assets/SmartLendLogo6.png";
+import gradient from "../assets/gradient.png";
 
 const SignUpPage = () => {
   const location = useLocation();
@@ -11,7 +14,6 @@ const SignUpPage = () => {
   const navigate = useNavigate();
 
   const [isLender, setIsLender] = useState(initialType);
-  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -20,7 +22,7 @@ const SignUpPage = () => {
     loanAmount: "",
     lenderType: "individual",
   });
-
+  
   useEffect(() => {
     setIsLender(initialType);
   }, [initialType]);
@@ -29,21 +31,48 @@ const SignUpPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add form validation & API integration here
-    console.log("Submitted Form Data:", formData);
-    navigate("/dashboard");
-  };
+    console.log("🔥 Form Submitted!", formData);
+
+    try {
+        console.log("🚀 Attempting Firebase Signup...");
+        
+        // Create user in Firebase Authentication
+        const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            formData.email,
+            formData.password
+        );
+
+        const user = userCredential.user;
+        console.log("✅ User Registered:", user);
+
+        // Store additional user data in Firestore
+        await setDoc(doc(db, "users", user.uid), {
+            fullName: formData.fullName,
+            email: formData.email,
+            phoneNumber: formData.phoneNumber,
+            isLender: isLender, // Save role
+            lenderType: isLender ? formData.lenderType : null,
+            loanAmount: !isLender ? formData.loanAmount : null, 
+            createdAt: new Date(),
+        });
+
+        console.log("✅ User Data Saved to Firestore");
+        alert("Signup Successful!");
+
+        // Navigate to dashboard
+        navigate("/dashboard");
+    } catch (error) {
+        console.error("❌ Signup Error:", error);
+        alert(`Signup Error: ${error.code} - ${error.message}`);
+    }
+};
+
 
   return (
-    <div className="relative w-full h-screen flex items-center justify-center px-6" style={{ backgroundImage: `url(${gradient})`, backgroundSize: "cover" }}
->
-
+    <div className="relative w-full h-screen flex items-center justify-center px-6" style={{ backgroundImage: `url(${gradient})`, backgroundSize: "cover" }}>
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md relative">
         <button 
           onClick={() => navigate("/")} 
@@ -75,11 +104,43 @@ const SignUpPage = () => {
           </button>
         </div>
 
-        <form className="space-y-4 text-textDark">
-          <input type="text" placeholder="Full Name" className="w-full px-4 py-3 border border-zinc-400 rounded-lg text-lg font-medium" />
-          <input type="email" placeholder="Email" className="w-full px-4 py-3 border border-zinc-400 rounded-lg text-lg font-medium" />
-          <input type="password" placeholder="Password" className="w-full px-4 py-3 border border-zinc-400 rounded-lg text-lg font-medium" />
-          <input type="tel" placeholder="Phone Number" className="w-full px-4 py-3 border border-zinc-400 rounded-lg text-lg font-medium" />
+        <form className="space-y-4 text-textDark" onSubmit={handleSubmit}>
+          <input 
+            type="text" 
+            name="fullName" 
+            placeholder="Full Name" 
+            value={formData.fullName} 
+            onChange={handleInputChange} 
+            className="w-full px-4 py-3 border border-zinc-400 rounded-lg text-lg font-medium" 
+            required
+          />
+          <input 
+            type="email" 
+            name="email" 
+            placeholder="Email" 
+            value={formData.email} 
+            onChange={handleInputChange} 
+            className="w-full px-4 py-3 border border-zinc-400 rounded-lg text-lg font-medium" 
+            required
+          />
+          <input 
+            type="password" 
+            name="password" 
+            placeholder="Password" 
+            value={formData.password} 
+            onChange={handleInputChange} 
+            className="w-full px-4 py-3 border border-zinc-400 rounded-lg text-lg font-medium" 
+            required
+          />
+          <input 
+            type="tel" 
+            name="phoneNumber" 
+            placeholder="Phone Number" 
+            value={formData.phoneNumber} 
+            onChange={handleInputChange} 
+            className="w-full px-4 py-3 border border-zinc-400 rounded-lg text-lg font-medium" 
+            required
+          />
           
           <div className="flex items-center space-x-2">
             <input
@@ -96,7 +157,7 @@ const SignUpPage = () => {
             </label>
           </div>
           
-          <button className="w-full bg-primary text-white py-3 rounded-lg hover:bg-hoverEffect transition text-lg font-semibold">
+          <button type="submit" className="w-full bg-primary text-white py-3 rounded-lg hover:bg-hoverEffect transition text-lg font-semibold">
             Sign Up as {isLender ? "Lender" : "Borrower"}
           </button>
 
