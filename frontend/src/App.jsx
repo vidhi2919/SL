@@ -21,7 +21,7 @@ const App = () => {
 
   return (
     <Router>
-      {user ? <BorrowerNavbar /> : <PublicNavbar />} {/* Dynamic Navbar */}
+      {/* Dynamic Navbar */}
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signuppage" element={<SignupPage />} />
