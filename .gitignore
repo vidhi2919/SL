@@ -1,0 +1,16 @@
+# Ignore service account keys, API keys, and credentials
+Mongobackend/updated_backend/config/service-account-key.json
+
+# Ignore environment variables
+.env
+*.env
+
+# Ignore Node modules and dependencies
+node_modules/
+*.log
+package-lock.json
+
+# Ignore compiled files
+*.pyc
+*.class
+*.DS_Store  # Mac-specific system files
