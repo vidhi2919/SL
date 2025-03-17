@@ -83,6 +83,8 @@ await axios.post("http://localhost:5001/api/auth/signup", {
 });
 
 
+
+
       console.log("✅ User Data Sent to Backend");
       alert("Signup Successful!");
 
