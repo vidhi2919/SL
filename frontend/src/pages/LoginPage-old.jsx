@@ -1,8 +1,9 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebaseConfig"; 
-import axios from "axios";
+import { auth, db } from "../firebaseConfig"; // Firestore Imports
+import { doc, getDoc } from "firebase/firestore";
 import { ArrowLeft as Home } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "../assets/SmartLendLogo6.png";
@@ -18,53 +19,55 @@ const LoginPage = ({ setUser }) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-
+  
     try {
       console.log("🚀 Attempting login for:", formData.email);
 
-      // ✅ Firebase Auth
+      //Firebase auth
       const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
       const user = userCredential.user;
       console.log("✅ Firebase Auth Success:", user.uid);
-
-      // ✅ Get Firebase token
-      const token = await user.getIdToken();
-
-      // ✅ Send token to backend
-      const response = await axios.post("http://localhost:5001/api/auth/login", { token });
-
-      console.log("✅ Backend Login Success:", response.data);
-
-      // ✅ Set user state with backend data
-      const userData = response.data;
-      setUser({
-        uid: userData.uid,
-        email: userData.email,
-        isLender: userData.isLender,
-        userData: userData.userData,
-      });
-
-      // ✅ Redirect based on user type
+  
+      console.log(`🔍 Fetching Firestore data for path: users/${user.uid}`);
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+  
+      if (!userDoc.exists()) {
+        console.error("❌ Firestore Error: User data not found!");
+        setError("User data not found in Firestore. Contact support.");
+        return;
+      }
+  
+      const userData = userDoc.data();
+      console.log("👤 Firestore User Data:", userData);
+  
+      if (userData.isLender === undefined) {
+        console.error("⚠️ Missing `isLender` field in Firestore:", userData);
+        setError("User type not assigned. Contact support.");
+        return;
+      }
+  
+      // Set user state with isLender
+      setUser({ ...user, isLender: userData.isLender });
+  
+      // Redirect user based on isLender boolean
       if (userData.isLender) {
         navigate("/lender/lender-dashboard");
       } else {
         navigate("/borrower-dashboard");
       }
-
     } catch (error) {
-      console.error("❌ Login Error:", error.response?.data || error.message);
+      console.error("❌ Login Error:", error);
       setError("Invalid email or password. Please try again.");
     }
-
+  
     setIsLoading(false);
   };
+  
 
   return (
-    <div
-      className="relative w-full h-screen flex items-center justify-center px-6"
-      style={{ backgroundImage: `url(${gradient})`, backgroundSize: "cover" }}
-    >
-      {/* Login Card */}
+    <div className="relative w-full h-screen flex items-center justify-center px-6"
+      style={{ backgroundImage: `url(${gradient})`, backgroundSize: "cover" }}>
+
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md relative">
         {/* Back Button */}
         <button 
@@ -109,7 +112,6 @@ const LoginPage = ({ setUser }) => {
           {/* Display error message */}
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
-          {/* Login Button */}
           <button
             type="submit"
             className="w-full bg-primary text-white p-2 rounded mt-2 hover:bg-opacity-90 transition"
@@ -140,3 +142,4 @@ const LoginPage = ({ setUser }) => {
 };
 
 export default LoginPage;
+
