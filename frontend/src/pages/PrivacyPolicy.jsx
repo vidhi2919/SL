@@ -1,149 +1,153 @@
-import React from 'react';
+import React from "react";
 
 const PrivacyPolicy = () => {
-    return (
-        <div className="flex">
-            <Sidebar sections={[
-                "Information We Collect",
-                "How We Collect Information",
-                "How We Use Your Information",
-                "Information Sharing and Disclosure",
-                "Data Retention",
-                "Your Rights and Choices",
-                "Security",
-                "Children's Privacy",
-                "Changes to This Privacy Policy",
-                "International Data Transfers",
-                "Contact Us"
-            ]} />
+  return (
+    <div className="bg-gray-50 min-h-screen">
+      {/* Header Section */}
+      <header className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-10 text-center shadow-md">
+        <h1 className="text-4xl font-bold">Privacy Policy</h1>
+        <p className="text-lg mt-2">Last Updated: March 05, 2025</p>
+      </header>
 
-            <div className="flex-1 p-6 max-w-4xl mx-auto">
-                <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
+      {/* Main Content */}
+      <div className="flex">
+        {/* Sidebar Navigation */}
+        <Sidebar
+          sections={[
+            "Information We Collect",
+            "How We Collect Information",
+            "How We Use Your Information",
+            "Information Sharing and Disclosure",
+            "Data Retention",
+            "Your Rights and Choices",
+            "Security",
+            "Children's Privacy",
+            "Changes to This Privacy Policy",
+            "Contact Us",
+          ]}
+        />
 
-                <p className="text-gray-700 mb-4">Last Updated: March 05, 2025</p>
-
-                <p className="text-gray-700 mb-4">
-                    SmartLend Ltd ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our peer-to-peer lending platform and related services (collectively, the "Services").
-                </p>
-
-                <section id="Information We Collect" className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-2">1. Information We Collect</h2>
-                    <h3 className="text-xl font-semibold mb-2">1.1 Personal Information</h3>
-                    <p className="text-gray-700">We collect information that identifies, relates to, describes, or could reasonably be linked to you, including:</p>
-                    <ul className="list-disc list-inside text-gray-700 ml-4">
-                        <li>Contact information (e.g., name, email address, phone number, postal address)</li>
-                        <li>Financial information (e.g., bank account details, credit history)</li>
-                        <li>Identification information (e.g., government-issued ID numbers)</li>
-                        <li>Employment information</li>
-                        <li>Device and usage information</li>
-                    </ul>
-                    <h3 className="text-xl font-semibold mb-2 mt-4">1.2 Non-Personal Information</h3>
-                    <p className="text-gray-700">We also collect non-personal information that does not directly identify you, such as browser type, IP address, and interaction with our Services.</p>
-                </section>
-
-                <section id="How We Collect Information" className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-2">2. How We Collect Information</h2>
-                    <p className="text-gray-700">We collect information:</p>
-                    <ul className="list-disc list-inside text-gray-700 ml-4">
-                        <li>Directly from you when you provide it</li>
-                        <li>Automatically through your use of our Services</li>
-                        <li>From third-party sources (e.g., credit bureaus, identity verification services)</li>
-                    </ul>
-                </section>
-
-                <section id="How We Use Your Information" className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-2">3. How We Use Your Information</h2>
-                    <p className="text-gray-700">We use your information to:</p>
-                    <ul className="list-disc list-inside text-gray-700 ml-4">
-                        <li>Provide, maintain, and improve our Services</li>
-                        <li>Process transactions and send related communications</li>
-                        <li>Verify your identity and prevent fraud</li>
-                        <li>Personalize your experience</li>
-                        <li>Comply with legal obligations</li>
-                        <li>Analyze usage patterns and trends</li>
-                    </ul>
-                </section>
-
-                <section id="Information Sharing and Disclosure" className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-2">4. Information Sharing and Disclosure</h2>
-                    <p className="text-gray-700">We may share your information:</p>
-                    <ul className="list-disc list-inside text-gray-700 ml-4">
-                        <li>With other users as necessary for loan transactions</li>
-                        <li>With service providers who assist in our operations</li>
-                        <li>With legal and regulatory authorities when required</li>
-                        <li>In connection with a business transfer or merger</li>
-                        <li>With your consent or at your direction</li>
-                    </ul>
-                </section>
-
-                <section id="Data Retention" className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-2">5. Data Retention</h2>
-                    <p className="text-gray-700">We retain your information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required by law.</p>
-                </section>
-
-                <section id="Your Rights and Choices" className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-2">6. Your Rights and Choices</h2>
-                    <p className="text-gray-700">Depending on your location, you may have the right to:</p>
-                    <ul className="list-disc list-inside text-gray-700 ml-4">
-                        <li>Access your personal information</li>
-                        <li>Correct inaccurate information</li>
-                        <li>Delete your information</li>
-                        <li>Object to or restrict certain processing</li>
-                        <li>Data portability</li>
-                    </ul>
-                    <p className="text-gray-700 mt-2">To exercise these rights, please contact us using the information provided in Section 11.</p>
-                </section>
-
-                <section id="Security" className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-2">7. Security</h2>
-                    <p className="text-gray-700">We implement appropriate technical and organizational measures to protect your information. However, no method of transmission over the Internet or electronic storage is 100% secure.</p>
-                </section>
-
-                <section id="Children's Privacy" className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-2">8. Children's Privacy</h2>
-                    <p className="text-gray-700">Our Services are not intended for children under 18. We do not knowingly collect personal information from children under 18.</p>
-                </section>
-
-                <section id="Changes to This Privacy Policy" className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-2">9. Changes to This Privacy Policy</h2>
-                    <p className="text-gray-700">We may update this Privacy Policy from time to time. The updated version will be indicated by an updated "Last Updated" date.</p>
-                </section>
-
-                <section id="International Data Transfers" className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-2">10. International Data Transfers</h2>
-                    <p className="text-gray-700">Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place for such transfers.</p>
-                </section>
-
-                <section id="Contact Us" className="mb-8">
-                    <h2 className="text-2xl font-semibold mb-2">11. Contact Us</h2>
-                    <p className="text-gray-700">If you have any questions about this Privacy Policy, please contact us at:</p>
-                    <p className="text-gray-700">
-                        SmartLend Ltd<br />
-                        56 Cae Bracla, Brackla, Bridgend CF31 2HE<br />
-                        Email: privacy@smartlend.uk<br />
-                        Phone: [Insert Phone Number]
-                    </p>
-                </section>
-            </div>
-        </div>
-    );
+        {/* Content Section */}
+        <main className="flex-1 max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-8">
+          {sections.map((section, index) => (
+            <Section key={section.id} {...section} />
+          ))}
+        </main>
+      </div>
+    </div>
+  );
 };
 
 const Sidebar = ({ sections }) => {
-    return (
-        <div className="w-64 h-screen p-6 bg-gray-100 fixed left-0 top-0 overflow-y-auto">
-            <h2 className="text-xl font-bold mb-4">Navigation</h2>
-            <ul>
-                {sections.map((section) => (
-                    <li key={section} className="mb-2">
-                        <a href={`#${section}`} className="text-blue-600 hover:underline">
-                            {section}
-                        </a>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+  return (
+    <aside className="w-64 bg-gray-100 p-6 hidden lg:block">
+      <ul className="space-y-4">
+        {sections.map((section) => (
+          <li key={section}>
+            <a
+              href={`#${section}`}
+              className="text-blue-600 hover:text-blue-800 transition"
+            >
+              {section}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  );
 };
+
+const Section = ({ id, title, content }) => {
+  return (
+    <section id={id} className="mb-8">
+      <h2 className="text-2xl font-semibold mb-4 text-blue-600">{title}</h2>
+      {content.map((paragraph, index) => (
+        <p key={index} className="text-gray-700 mb-4">{paragraph}</p>
+      ))}
+    </section>
+  );
+};
+
+// Section Data
+const sections = [
+  {
+    id: "Information We Collect",
+    title: "1. Information We Collect",
+    content: [
+      "We collect personal information that identifies, relates to, describes, or could reasonably be linked to you. This includes your name, email address, phone number, postal address, financial details such as bank account information and credit history, government-issued identification numbers, employment details, and device usage information.",
+      "Additionally, we collect non-personal information that does not directly identify you. This includes data such as browser type, IP address, and interaction with our Services."
+    ]
+  },
+  {
+    id: "How We Collect Information",
+    title: "2. How We Collect Information",
+    content: [
+      "We collect information directly from you when you provide it, such as during account registration or loan application. Additionally, we automatically collect information through your interaction with our Services, including your browsing behavior and transaction history. We may also receive information from third-party sources, such as credit bureaus and identity verification services."
+    ]
+  },
+  {
+    id: "How We Use Your Information",
+    title: "3. How We Use Your Information",
+    content: [
+      "We use your information to provide, maintain, and improve our Services. This includes processing transactions, sending relevant communications, verifying your identity, preventing fraud, and ensuring compliance with legal and regulatory requirements.",
+      "Additionally, we may use your information to personalize your experience, analyze usage patterns, and enhance our platform's functionality."
+    ]
+  },
+  {
+    id: "Information Sharing and Disclosure",
+    title: "4. Information Sharing and Disclosure",
+    content: [
+      "We may share your information with other users as necessary for loan transactions. Additionally, we may share your data with service providers who assist in our operations, such as payment processors and identity verification services.",
+      "We may also disclose your information when required by law or in connection with business transfers or mergers."
+    ]
+  },
+  {
+    id: "Data Retention",
+    title: "5. Data Retention",
+    content: [
+      "We retain your information for as long as necessary to fulfill the purposes outlined in this Privacy Policy. In some cases, we may retain data for longer periods if required by law or to resolve disputes."
+    ]
+  },
+  {
+    id: "Your Rights and Choices",
+    title: "6. Your Rights and Choices",
+    content: [
+      "Depending on your location, you may have the right to access, correct, or delete your personal information.",
+      "You may also have the right to object to certain processing activities and request data portability."
+    ]
+  },
+  {
+    id: "Security",
+    title: "7. Security",
+    content: [
+      "We implement appropriate technical measures to protect your information.",
+      "However, no method of transmission over the Internet is completely secure."
+    ]
+  },
+  {
+    id: "Children's Privacy",
+    title: "8. Children's Privacy",
+    content: [
+      "Our Services are not intended for children under the age of 18.",
+      "If we become aware that we have collected such data from children under 18 years old without parental consent, we will delete it promptly."
+    ]
+  },
+  {
+    id: "Changes to This Privacy Policy",
+    title: "9. Changes to This Privacy Policy",
+    content: [
+      "We may update this Privacy Policy periodically.",
+      "Any changes will be reflected by an updated 'Last Updated' date at the beginning of this document."
+    ]
+  },
+  {
+    id: "Contact Us",
+    title: "10. Contact Us",
+    content: [
+      `If you have any questions about this Privacy Policy or wish to exercise your rights under applicable law.`,
+      `Contact us at privacy@smartlend.uk`
+    ]
+  }
+];
 
 export default PrivacyPolicy;
