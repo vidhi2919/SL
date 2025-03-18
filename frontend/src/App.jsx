@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // ✅ Fixed useEffect import
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import SignupPage from "./pages/SignUpPage";
@@ -17,39 +17,82 @@ import TransactionHistory from "./pages/TransactionHistory";
 import NotificationsPage from "./pages/NotificationsPage";
 
 const App = () => {
-  const [user, setUser] = useState(null); // Authentication state
+  const [user, setUser] = useState(null);
+
+  // ✅ Load user from localStorage on app start
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  // ✅ Protect routes based on user type
+  const ProtectedRoute = ({ element, allowedForLender = false, allowedForBorrower = false }) => {
+    if (!user) {
+      return <Navigate to="/loginpage" />;
+    }
+
+    if (user.isLender && !allowedForLender) {
+      return <Navigate to="/borrower-dashboard" />;
+    }
+
+    if (!user.isLender && !allowedForBorrower) {
+      return <Navigate to="/lender/lender-dashboard" />;
+    }
+
+    return element;
+  };
 
   return (
     <Router>
-      {/* Dynamic Navbar */}
       <Routes>
+        {/* ✅ Public Routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/signuppage" element={<SignupPage />} />
         <Route path="/loginpage" element={<LoginPage setUser={setUser} />} />
-        
-         <Route
-        //  path="/dashboard"
-        //  element={user ? <BorrowerDashboard /> : <Navigate to="/loginpage" />} // Protect Dashboard
-        ///>
-        
-        path="/borrower-dashboard" element={<BorrowerDashboard />} />
-        <Route path="/transaction-history" element={<TransactionHistory userRole="lender" />} />
-        <Route path="/notifications" element={<NotificationsPage userRole="lender" />} />
-
-        <Route
-          path="/loan-application"
-          element={user ? <LoanApplicationPage /> : <Navigate to="/loginpage" />} // Protect Loan Application Page
-        />
-
-        <Route path="/profile/borrower" element={<BorrowerProfile />} />
-        <Route path="/profile/lender" element={<LenderProfile />} />
-
-        <Route path="/profile/borrower/edit" element={<BorrowerEditProfile />} />
-        <Route path="/profile/lender/edit" element={<LenderEditProfile />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+
+        {/* ✅ Protected Routes */}
+        <Route
+          path="/borrower-dashboard"
+          element={<ProtectedRoute element={<BorrowerDashboard />} allowedForBorrower />}
+        />
+        <Route
+          path="/lender/lender-dashboard"
+          element={<ProtectedRoute element={<LenderProfile />} allowedForLender />}
+        />
+        <Route
+          path="/loan-application"
+          element={<ProtectedRoute element={<LoanApplicationPage />} allowedForBorrower />}
+        />
+        <Route
+          path="/profile/borrower"
+          element={<ProtectedRoute element={<BorrowerProfile />} allowedForBorrower />}
+        />
+        <Route
+          path="/profile/lender"
+          element={<ProtectedRoute element={<LenderProfile />} allowedForLender />}
+        />
+        <Route
+          path="/profile/borrower/edit"
+          element={<ProtectedRoute element={<BorrowerEditProfile />} allowedForBorrower />}
+        />
+        <Route
+          path="/profile/lender/edit"
+          element={<ProtectedRoute element={<LenderEditProfile />} allowedForLender />}
+        />
+        <Route
+          path="/transaction-history"
+          element={<ProtectedRoute element={<TransactionHistory userRole={user?.isLender ? "lender" : "borrower"} />} />}
+        />
+        <Route
+          path="/notifications"
+          element={<ProtectedRoute element={<NotificationsPage userRole={user?.isLender ? "lender" : "borrower"} />} />}
+        />
       </Routes>
     </Router>
   );

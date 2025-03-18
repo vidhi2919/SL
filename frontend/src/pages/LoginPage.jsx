@@ -37,12 +37,26 @@ const LoginPage = ({ setUser }) => {
 
       // ✅ Set user state with backend data
       const userData = response.data;
-      setUser({
+      // setUser({
+      //   uid: userData.uid,
+      //   email: userData.email,
+      //   isLender: userData.isLender,
+      //   userData: userData.userData,
+      // });
+
+      const loggedInUser = {
         uid: userData.uid,
         email: userData.email,
         isLender: userData.isLender,
         userData: userData.userData,
-      });
+      };
+  
+      setUser(loggedInUser);
+  
+      // ✅ Save token and user data to localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(loggedInUser));
+
 
       // ✅ Redirect based on user type
       if (userData.isLender) {
