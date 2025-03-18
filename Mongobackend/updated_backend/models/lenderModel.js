@@ -19,14 +19,14 @@ const LenderSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   phone: { type: String, required: true },
-  address: { type: String, required: true },
+  address: { type: String, required: false },
 
   // Investment Details
-  availableFunds: { type: Number, required: true }, // Total funds available for lending
-  minInterestRate: { type: Number, required: true }, // Minimum acceptable interest rate
-  maxLoanAmount: { type: Number, required: true }, // Maximum single loan they can fund
-  maxLoanTerm: { type: Number, required: true }, // Maximum tenure lender is okay with
-  riskAppetite: { type: String, enum: ["Low", "Medium", "High"], required: true }, // Risk level lender is okay with
+  availableFunds: { type: Number, required: false }, // Total funds available for lending
+  minInterestRate: { type: Number, required: false }, // Minimum acceptable interest rate
+  maxLoanAmount: { type: Number, required: false }, // Maximum single loan they can fund
+  maxLoanTerm: { type: Number, required: false }, // Maximum tenure lender is okay with
+  riskAppetite: { type: String, enum: ["Low", "Medium", "High"], required: false }, // Risk level lender is okay with
 
   // Bank & Documents
   bankDetails: {

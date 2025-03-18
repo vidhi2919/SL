@@ -25,6 +25,7 @@ const LoanApplication = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [documentPreviews, setDocumentPreviews] = useState([]);
+  const [error, setError] = useState(""); //added by Vidhi
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,10 +41,40 @@ const LoanApplication = () => {
     setDocumentPreviews(previews);
   };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Submitted Data: ", formData);
+  //   setSubmitted(true);
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted Data: ", formData);
-    setSubmitted(true);
+    setError("");
+
+    try {
+      const response = await fetch("http://localhost:5001/predict-loan", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitted(true);
+        alert(
+          data.approved
+            ? "✅ Your loan has been approved!"
+            : "❌ Your loan application was rejected."
+        );
+      } else {
+        setError(data.error || "Failed to submit the loan application.");
+      }
+    } catch (err) {
+      setError("Network error or server is down.");
+    }
   };
 
   return (
@@ -217,6 +248,10 @@ const LoanApplication = () => {
             Submit Application
           </button>
         </form>
+      )}
+      {/* Error Message */} 
+      {error && (
+        <div className="text-red-600 text-center mt-4">{error}</div>
       )}
     </motion.div>
   );
