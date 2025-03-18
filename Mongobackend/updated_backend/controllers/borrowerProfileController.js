@@ -1,3 +1,4 @@
+/*
 const BorrowerProfile = require("../models/borrowerProfile");
 const Borrower = require("../models/borrowerModel"); // Ensure correct path!
 
@@ -60,3 +61,4 @@ const updateBorrowerProfile = async (req, res) => {
   };
   
 module.exports = { getBorrowerProfile, updateBorrowerProfile, deleteBorrowerProfile};
+*/

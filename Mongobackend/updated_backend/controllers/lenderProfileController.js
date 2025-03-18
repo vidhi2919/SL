@@ -1,3 +1,4 @@
+/*
 const LenderProfile = require("../models/lenderProfile");
 const Lender = require("../models/lenderModel"); // ✅ Ensure correct path!
 
@@ -65,3 +66,4 @@ module.exports = {
     updateLenderProfile,
     deleteLenderProfile
 };
+*/

@@ -48,8 +48,8 @@ const signup = async (req, res) => {
 module.exports = { signup };
 */
 
-const Lender = require('../models/lenderProfile');
-const Borrower = require('../models/borrowerProfile');
+const Lender = require('../models/lenderModel');
+const Borrower = require('../models/borrowerModel');
 const admin = require('../config/firebase');
 
 const signup = async (req, res) => {

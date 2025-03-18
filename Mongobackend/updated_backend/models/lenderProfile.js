@@ -24,6 +24,7 @@ const lenderProfileSchema = new mongoose.Schema({
 
 module.exports = mongoose.model("lenderProfile", lenderProfileSchema);
 */
+/*
 const mongoose = require('mongoose');
 
 const lenderProfileSchema = new mongoose.Schema({
@@ -48,3 +49,4 @@ const lenderProfileSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 module.exports = mongoose.model("LenderProfile", lenderProfileSchema);
+*/

@@ -1,3 +1,4 @@
+/*
 const express = require("express");
 const { getBorrowerProfile, updateBorrowerProfile, deleteBorrowerProfile} = require("../controllers/borrowerProfileController");
 
@@ -9,3 +10,4 @@ router.delete("/:id", deleteBorrowerProfile);
 
 
 module.exports = router;
+*/
