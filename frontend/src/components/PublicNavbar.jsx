@@ -21,12 +21,22 @@ const Navbar = () => {
           {["Home", "About", "How It Works", "FAQ", "Contact Us"].map((item, index) => (
             <li key={index}>
               <Link
-                to={item.toLowerCase().replace(/\s+/g, "-")}
-                smooth={true}
-                duration={500}
-                className="cursor-pointer hover:text-[#F5FFC3] transition-all"
-              >
-                {item}
+                  to={item.toLowerCase().replace(/\s+/g, "-")}
+                  smooth={true}
+                  duration={500}
+                  onClick={(e) => {
+                    const target = `#${item.toLowerCase().replace(/\s+/g, "-")}`;
+                    if (window.location.pathname !== "/") {
+                      window.location.href = `/${target}`;
+                    } else {
+                      e.preventDefault(); // Prevent default if already on the page
+                      document.querySelector(target)?.scrollIntoView({ behavior: "smooth" });
+                    }
+                    setIsOpen(false); // Close mobile menu
+                  }}
+                  className="cursor-pointer hover:text-[#F5FFC3] transition-all"
+                >
+                  {item}
               </Link>
             </li>
           ))}
