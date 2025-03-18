@@ -1,5 +1,6 @@
+/*
 const express = require('express');
-const { getLenderProfile, updateLenderProfile } = require('../controllers/lenderProfileController');
+const { getLenderProfile, updateLenderProfile,deleteLenderProfile} = require('../controllers/lenderProfileController');
 
 const router = express.Router();
 
@@ -8,5 +9,8 @@ router.get('/:id', getLenderProfile);
 
 // ✅ Route to update lender profile by ID
 router.patch('/:id', updateLenderProfile);
+router.delete('/:id', deleteLenderProfile);
+
 
 module.exports = router;
+*/

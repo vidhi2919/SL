@@ -65,10 +65,19 @@ const App = () => {
           path="/lender/lender-dashboard"
           element={<ProtectedRoute element={<LenderProfile />} allowedForLender />}
         />
-        <Route
+
+        {/* <Route
           path="/loan-application"
           element={<ProtectedRoute element={<LoanApplicationPage />} allowedForBorrower />}
-        />
+        /> */}
+        {/* <Route
+          path="/loan-application"
+          element={user ? <LoanApplicationPage /> : <Navigate to="/loginpage" />} // Protect Loan Application Page
+        /> */}
+
+        // Direct access for testing:
+        <Route path="/loan-application" element={<LoanApplicationPage/>} />
+
         <Route
           path="/profile/borrower"
           element={<ProtectedRoute element={<BorrowerProfile />} allowedForBorrower />}
