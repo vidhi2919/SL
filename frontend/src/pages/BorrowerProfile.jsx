@@ -1,4 +1,5 @@
 import BorrowerDisplayProfile from "../components/profile/BorrowerDisplayProfile";
+import BorrowerLayout from "../components/BorrowerLayout";
 
 const BorrowerProfile = () => {
     const borrowerData = {
