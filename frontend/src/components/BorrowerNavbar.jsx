@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, UserCircle } from "lucide-react";
 import SmartLendLogo from "../assets/SmartLendLogo7.png";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -19,6 +19,11 @@ const BorrowerNavbar = () => {
     <nav className="bg-blue-600 shadow-md fixed w-full top-0 z-50" role="navigation" aria-label="Main Navigation">
       <div className="container mx-auto flex justify-between items-center p-4">
         
+        {/* Left Section: Profile Icon */}
+        <Link to="/borrower-profile" aria-label="Go to profile">
+          <UserCircle size={32} className="text-white hover:text-[#F5FFC3]" />
+        </Link>
+
         {/* Logo */}
         <img src={SmartLendLogo} alt="SmartLend Logo" className="h-10" />
 
