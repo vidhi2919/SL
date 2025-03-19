@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import BorrowerLayout from "../components/BorrowerLayout";
 
 const LoanAgreementPage = () => {
   const [agreed, setAgreed] = useState(false);

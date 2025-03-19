@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import BorrowerLayout from "../components/BorrowerLayout";
 
 const LoanApplication = () => {
   const [formData, setFormData] = useState({

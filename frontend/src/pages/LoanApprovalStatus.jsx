@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import BorrowerLayout from "../components/BorrowerLayout";
 
 const LoanStatusPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
