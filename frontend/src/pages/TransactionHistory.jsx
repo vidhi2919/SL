@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { format } from "date-fns";
+import BorrowerLayout from "../components/BorrowerLayout";
 
 const transactionsData = {
   borrower: [

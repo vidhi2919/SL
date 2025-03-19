@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CheckCircle, Clock, XCircle, CreditCard } from "lucide-react"; // Icons for better UI
+import BorrowerLayout from "../components/BorrowerLayout";
 
 const RepaymentTracking = () => {
   const [repayments, setRepayments] = useState([
