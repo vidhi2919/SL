@@ -44,8 +44,8 @@ const borrowerRoutes = require('./routes/borrowerRoutes');
 const lenderRoutes = require('./routes/lenderRoutes');
 const loanRoutes = require('./routes/loanRoutes');
 const transactionRoutes = require("./routes/transactionRoutes");
-const borrowerProfileRoutes = require("./routes/borrowerProfileRoutes");
-const lenderProfileRoutes = require('./routes/lenderProfileRoutes');
+// const borrowerProfileRoutes = require("./routes/borrowerProfileRoutes");
+// const lenderProfileRoutes = require('./routes/lenderProfileRoutes');
 const authRoutes = require('./routes/authRoutes'); // ✅ Import route
 
 
@@ -53,8 +53,8 @@ app.use('/api/borrowers', borrowerRoutes);
 app.use('/api/lenders', lenderRoutes);
 app.use('/api/loans', loanRoutes);
 app.use("/api/transactions", transactionRoutes);
-app.use("/api/borrower-profile", borrowerProfileRoutes);
-app.use('/api/lender', lenderProfileRoutes);
+// app.use("/api/borrower-profile", borrowerProfileRoutes);
+// app.use('/api/lender', lenderProfileRoutes);
 app.use('/api/auth', authRoutes); //register route
 const testRoute = require('./routes/test');
 app.use('/api', testRoute);

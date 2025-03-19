@@ -4,41 +4,30 @@ import BorrowerLayout from "../components/BorrowerLayout";
 
 const LoanApplication = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-    ownOrRent: "",
-    sellBeforeBuying: "",
-    purchaseType: "",
-    preQualified: "",
-    employmentStatus: "",
+    loanID: "",
+    age: "",
+    income: "",
     loanAmount: "",
-    annualIncome: "",
-    representedByRealtor: "",
-    comments: "",
-    documents: [],
+    creditScore: "",
+    monthsEmployed: "",
+    numCreditLines: "",
+    interestRate: "",
+    loanTerm: "",
+    dtiRatio: "",
+    education: "",
+    employmentType: "",
+    maritalStatus: "",
+    hasMortgage: "",
+    hasDependents: "",
+    loanPurpose: "",
+    hasCoSigner: "",
   });
 
   const [submitted, setSubmitted] = useState(false);
-  const [documentPreviews, setDocumentPreviews] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
-
-  const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    setFormData({ ...formData, documents: files });
-
-    // Show previews for images
-    const previews = files.map((file) => URL.createObjectURL(file));
-    setDocumentPreviews(previews);
   };
 
   const handleSubmit = (e) => {
@@ -64,159 +53,244 @@ const LoanApplication = () => {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="firstName"
-              placeholder="First Name"
-              className="border p-2 w-full rounded-lg"
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="lastName"
-              placeholder="Last Name"
-              className="border p-2 w-full rounded-lg"
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            className="border p-2 w-full rounded-lg"
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Phone Number"
-            className="border p-2 w-full rounded-lg"
-            onChange={handleChange}
-            required
-          />
 
-          <h3 className="text-xl font-semibold text-gray-700">Address</h3>
-          <input
-            type="text"
-            name="address"
-            placeholder="Street Address"
-            className="border p-2 w-full rounded-lg"
-            onChange={handleChange}
-            required
-          />
-          <div className="grid grid-cols-3 gap-4">
+          {/* Personal Details */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Age</label>
             <input
-              type="text"
-              name="city"
-              placeholder="City"
-              className="border p-2 w-full rounded-lg"
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="state"
-              placeholder="State"
-              className="border p-2 w-full rounded-lg"
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="zip"
-              placeholder="ZIP Code"
-              className="border p-2 w-full rounded-lg"
+              type="number"
+              name="age"
+              placeholder="Age"
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
               onChange={handleChange}
               required
             />
           </div>
 
-          <h3 className="text-xl font-semibold text-gray-700">Loan Details</h3>
-          <input
-            type="number"
-            name="loanAmount"
-            placeholder="Loan Amount ($)"
-            className="border p-2 w-full rounded-lg"
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="number"
-            name="annualIncome"
-            placeholder="Annual Income ($)"
-            className="border p-2 w-full rounded-lg"
-            onChange={handleChange}
-            required
-          />
-
-          <h3 className="text-xl font-semibold text-gray-700">Employment Status</h3>
-          <select
-            name="employmentStatus"
-            className="border p-2 w-full rounded-lg"
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Employment Status</option>
-            <option value="Employed">Employed</option>
-            <option value="Self-Employed">Self-Employed</option>
-            <option value="Unemployed">Unemployed</option>
-            <option value="Student">Student</option>
-          </select>
-
-          <h3 className="text-xl font-semibold text-gray-700">Home Ownership</h3>
-          <div className="flex gap-4">
-            <label>
-              <input type="radio" name="ownOrRent" value="Own" onChange={handleChange} /> Own
-            </label>
-            <label>
-              <input type="radio" name="ownOrRent" value="Rent" onChange={handleChange} /> Rent
-            </label>
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Income ($)</label>
+            <input
+              type="number"
+              name="income"
+              placeholder="Income ($)"
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+              onChange={handleChange}
+              required
+            />
           </div>
 
-          <label className="block font-medium text-gray-600">
-            Upload Required Documents
-          </label>
-          <input
-            type="file"
-            multiple
-            className="border p-2 w-full rounded-lg"
-            onChange={handleFileChange}
-          />
+          {/* Loan Information */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Loan Amount ($)</label>
+            <input
+              type="number"
+              name="loanAmount"
+              placeholder="Loan Amount ($)"
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          {documentPreviews.length > 0 && (
-            <div className="mt-4">
-              <h4 className="text-lg font-medium text-gray-700">Document Previews:</h4>
-              <div className="flex flex-wrap gap-2">
-                {documentPreviews.map((src, index) => (
-                  <img key={index} src={src} alt={`Document ${index + 1}`} className="w-24 h-24 object-cover rounded-lg shadow-md" />
-                ))}
-              </div>
-            </div>
-          )}
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Credit Score</label>
+            <input
+              type="number"
+              name="creditScore"
+              placeholder="Credit Score"
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          <textarea
-            name="comments"
-            placeholder="Additional Comments or Questions"
-            className="border p-2 w-full rounded-lg"
-            onChange={handleChange}
-            rows="4"
-          ></textarea>
+          {/* Employment and Financial Details */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Months Employed</label>
+            <input
+              type="number"
+              name="monthsEmployed"
+              placeholder="Months Employed"
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Number of Credit Lines</label>
+            <input
+              type="number"
+              name="numCreditLines"
+              placeholder="Number of Credit Lines"
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* Financial Details */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Interest Rate (%)</label>
+            <input
+              type="number"
+              step="0.01"
+              name="interestRate"
+              placeholder="Interest Rate (%)"
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Loan Term (Months)</label>
+            <input
+              type="number"
+              name="loanTerm"
+              placeholder="Loan Term (Months)"
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* Categorical Fields */}
+          {/* Education */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Education</label>
+            <select
+              name="education"
+              onChange={handleChange}
+              required
+              className='border p-2 w-full rounded-lg'
+              >
+              <option value="" disabled selected>
+                Select Education Level
+              </option>
+              <option value="PhD">PhD</option>
+              <option value="Master's">Master's</option>
+              <option value="Bachelor's">Bachelor's</option>
+              <option value="High School">High School</option>
+            </select>
+          </div>
+
+          {/* Employment Type */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Employment Type</label>
+            <select
+              name="employmentType"
+              onChange={handleChange}
+              required
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+            >
+              <option value="" disabled selected>
+                Select Employment Type
+              </option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Self-employed">Self-employed</option>
+              <option value="Unemployed">Unemployed</option>
+            </select>
+          </div>
+
+          {/* Marital Status */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Marital Status</label>
+            <select
+              name="maritalStatus"
+              onChange={handleChange}
+              required
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+            >
+              <option value="" disabled selected>
+                Select Marital Status
+              </option>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+              <option value="Divorced">Divorced</option>
+            </select>
+          </div>
+
+          {/* Has Mortgage */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Has Mortgage</label>
+            <select
+              name="hasMortgage"
+              onChange={handleChange}
+              required
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+            >
+              <option value="" disabled selected>
+                Do you have a mortgage?
+              </option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          {/* Has Dependents */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Has Dependents</label>
+            <select
+              name="hasDependents"
+              onChange={handleChange}
+              required
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+            >
+              <option value="" disabled selected>
+                Do you have dependents?
+              </option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          {/* Loan Purpose */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Loan Purpose</label>
+            <select
+              name="loanPurpose"
+              onChange={handleChange}
+              required
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+            >
+              <option value="" disabled selected>
+                Select Loan Purpose
+              </option>
+              <option value="Home">Home</option>
+              <option value="Auto">Auto</option>
+              <option value="Education">Education</option>
+              <option value="Business">Business</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          {/* Has Co-Signer */}
+          <div className="flex flex-col">
+            <label className="text-gray-600 mb-2">Has Co-Signer</label>
+            <select
+              name="hasCoSigner"
+              onChange={handleChange}
+              required
+              className="border p-2 w-full rounded-lg focus:outline-none focus:ring focus:ring-green-500"
+            >
+              <option value="" disabled selected>
+                Do you have a co-signer?
+              </option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          {/* Submit Button */}
           <button
             type="submit"
-            className={`p-3 w-full rounded-lg font-bold ${
-              Object.values(formData).some((val) => val === "" || val === null)
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-green-500 hover:bg-green-600 text-white"
-            }`}
-            disabled={Object.values(formData).some((val) => val === "" || val === null)}
+            className={`p-3 w-full rounded-lg font-bold bg-green-500 hover:bg-green-600 text-white`}
           >
             Submit Application
           </button>
+
         </form>
       )}
     </motion.div>

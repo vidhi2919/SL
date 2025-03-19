@@ -48,8 +48,9 @@ const signup = async (req, res) => {
 module.exports = { signup };
 */
 
-const Lender = require('../models/lenderProfile');
-const Borrower = require('../models/borrowerProfile');
+const Lender = require('../models/lenderModel');
+const Borrower = require('../models/borrowerModel');
+const admin = require('../config/firebase');
 
 const signup = async (req, res) => {
     try {
@@ -115,4 +116,48 @@ const signup = async (req, res) => {
     }
 };
 
-module.exports = { signup };
+const login = async (req, res) => {
+    try {
+      const { token } = req.body; // Firebase token from frontend
+  
+      // ✅ Verify Firebase token
+      const decodedToken = await admin.auth().verifyIdToken(token);
+      const { uid, email } = decodedToken;
+  
+      console.log("✅ Firebase Token Verified:", decodedToken);
+  
+      // ✅ Check if user exists in MongoDB
+      const lender = await Lender.findOne({ email });
+      const borrower = await Borrower.findOne({ email });
+  
+      let user;
+      let isLender;
+  
+      if (lender) {
+        user = lender;
+        isLender = true;
+      } else if (borrower) {
+        user = borrower;
+        isLender = false;
+      } else {
+        return res.status(404).json({ error: "User not found" });
+      }
+  
+      console.log("👤 User Found in MongoDB:", user);
+  
+      // ✅ Return user data
+      res.status(200).json({
+        uid,
+        email,
+        isLender,
+        userData: user,
+      });
+  
+    } catch (error) {
+      console.error("❌ Login Error:", error.message);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+  
+
+module.exports = { signup,login };
