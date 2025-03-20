@@ -45,7 +45,7 @@ const LenderDisplayProfile = () => {
                 Take control of your profile and stay on top of your financial investments with ease.
             </p>
             <Link
-              to="/profile/lender/edit"
+              to="/lender-profile/edit"
               className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
             >
               Edit Profile
