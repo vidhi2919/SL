@@ -24,6 +24,7 @@ const BorrowerSchema = new mongoose.Schema({
 
 module.exports = mongoose.model("Borrower", BorrowerSchema);
 */
+
 const mongoose = require("mongoose");
 
 const BorrowerSchema = new mongoose.Schema({

@@ -1,16 +1,70 @@
-import React, { useState } from "react";
-import { CheckCircle, Clock, XCircle, CreditCard } from "lucide-react"; // Icons for better UI
-import BorrowerLayout from "../components/BorrowerLayout";
+import React, { useState, useEffect } from "react";
+import { CheckCircle, Clock, XCircle, CreditCard } from "lucide-react";
 
 const RepaymentTracking = () => {
   const [repayments, setRepayments] = useState([
-    { id: 1, dueDate: "2025-03-10", amount: "$500", status: "Upcoming" },
-    { id: 2, dueDate: "2025-02-10", amount: "$500", status: "Paid" },
-    { id: 3, dueDate: "2025-01-10", amount: "$500", status: "Paid" },
+    { id: 1, dueDate: "2025-03-10", amount: 500, status: "Upcoming" },
+    { id: 2, dueDate: "2025-02-10", amount: 500, status: "Paid" },
+    { id: 3, dueDate: "2025-01-10", amount: 500, status: "Paid" },
   ]);
 
-  // Function to handle payment
-  const handlePayNow = (id) => {
+  useEffect(() => {
+    // Check if Razorpay is loaded properly
+    if (!window.Razorpay) {
+      console.error("❌ Razorpay SDK not loaded correctly.");
+    } else {
+      console.log("✅ Razorpay SDK loaded successfully.");
+    }
+  }, []);
+
+  // Razorpay Payment Handler
+  const handlePayNow = (payment) => {
+    if (!window.Razorpay) {
+      console.error("❌ Razorpay not loaded. Please check the script.");
+      alert("Razorpay SDK not loaded. Please refresh the page.");
+      return;
+    }
+
+    const options = {
+      key: "rzp_test_LjpXN5tBLjI5vm", // Replace with your Razorpay API key
+      amount: payment.amount * 100, // Amount in paise
+      currency: "INR",
+      name: "Loan Payment",
+      description: `Payment for Loan ID ${payment.id}`,
+      handler: function (response) {
+        console.log("✅ Payment Successful:", response);
+        alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+        markAsPaid(payment.id);
+      },
+      prefill: {
+        name: "Dhruv Dawar",
+        email: "dhruv.dawar@example.com",
+        contact: "9999999999",
+      },
+      notes: {
+        loan_id: payment.id,
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+
+    try {
+      const razorpay = new window.Razorpay(options);
+      razorpay.on("payment.failed", function (response) {
+        console.error("❌ Payment Failed:", response.error);
+        alert("Payment Failed: " + response.error.description);
+      });
+
+      razorpay.open();
+    } catch (error) {
+      console.error("❌ Error initializing Razorpay:", error);
+      alert("Error initializing Razorpay. Check console for details.");
+    }
+  };
+
+  // Mark payment as paid after successful payment
+  const markAsPaid = (id) => {
     setRepayments((prevRepayments) =>
       prevRepayments.map((payment) =>
         payment.id === id ? { ...payment, status: "Paid" } : payment
@@ -38,7 +92,7 @@ const RepaymentTracking = () => {
               <tr key={payment.id} className="text-center hover:bg-gray-50">
                 <td className="p-3 border">{payment.id}</td>
                 <td className="p-3 border">{payment.dueDate}</td>
-                <td className="p-3 border">{payment.amount}</td>
+                <td className="p-3 border">₹{payment.amount}</td>
                 <td
                   className={`p-3 border font-semibold flex items-center justify-center gap-2 ${
                     payment.status === "Paid"
@@ -56,7 +110,7 @@ const RepaymentTracking = () => {
                 <td className="p-3 border">
                   {payment.status === "Upcoming" ? (
                     <button
-                      onClick={() => handlePayNow(payment.id)}
+                      onClick={() => handlePayNow(payment)}
                       className="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-green-600 transition"
                     >
                       <CreditCard size={16} />
@@ -76,3 +130,5 @@ const RepaymentTracking = () => {
 };
 
 export default RepaymentTracking;
+
+

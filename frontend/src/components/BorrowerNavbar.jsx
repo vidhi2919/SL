@@ -5,9 +5,11 @@ import SmartLendLogo from "../assets/SmartLendLogo7.png";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
+
   { path: "/dashboard", label: "Dashboard" },
   { path: "/loan-application", label: "Apply for Loan" },
   { path: "/loan-status", label: "Loan Status" },
+  {path : "/loan-search-page", label: "Loan Search"},
   { path: "/repayment-tracking", label: "Repayment Tracking" },
   { path: "/loan-agreement", label: "Loan Agreement" },
 ];

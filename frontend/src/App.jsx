@@ -9,6 +9,7 @@ import BorrowerEditProfile from "./components/profile/BorrowerEditProfile";
 import LenderEditProfile from "./components/profile/LenderEditProfile";
 import LenderProfile from "./pages/LenderProfile";
 import BorrowerProfile from "./pages/BorrowerProfile";
+import LoanPage from "./pages/LoanSearchPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import ChangePassword from "./components/ChangePassword";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -64,6 +65,8 @@ const App = () => {
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+            <Route path="/loan-search-page" element={<LoanPage/>} />
+            
 
             {/* Protected Borrower Routes */}
             {user?.role === "borrower" && (
